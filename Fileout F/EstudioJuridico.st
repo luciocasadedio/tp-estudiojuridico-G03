@@ -1,4 +1,4 @@
-'From Cuis7.6 [latest update: #7777] on 15 October 2026 at 11:42:57 am'!
+'From Cuis7.6 [latest update: #7777] on 15 October 2026 at 3:42:14 pm'!
 !classDefinition: #EstudioJuridico category: #EstudioJuridico!
 Object subclass: #EstudioJuridico
 	instanceVariableNames: 'abogados fueros causas consola'
@@ -282,15 +282,16 @@ listado
 		].! !
 
 
-!EstudioJuridico methodsFor: 'menu' stamp: 'SHOT 15/Oct/2026 11:34:46'!
+!EstudioJuridico methodsFor: 'menu' stamp: 'SHOT 15/Oct/2026 15:41:48'!
 menu
-	| op entrada |
+    | op entrada |
 
-	op := -1.
+    op := -1.
 
-	[op = 0] whileFalse: [
-		entrada := Prompter prompt:
-			'MENU
+    [op = 0] whileFalse: [
+
+        entrada := Prompter prompt:
+            'MENU
 
 1 - Crear abogado
 2 - Crear causa
@@ -301,23 +302,31 @@ menu
 
 Ingrese opcion:'.
 
-		entrada isNil
-			ifTrue: [ ^ self ].
+        entrada isNil
+            ifTrue: [ ^ self ].
 
-		entrada isEmpty
-			ifTrue: [ ^ self ].
+        entrada isEmpty
+            ifTrue: [ ^ self ].
 
-		op := entrada asNumber asInteger.
+        (#('0' '1' '2' '3' '4' '5') includes: entrada)
+            ifTrue: [
 
-		(op = 1) ifTrue: [ self crearAbogado ].
-		(op = 2) ifTrue: [ self crearCausa ].
-		(op = 3) ifTrue: [ self crearFuero ].
-		(op = 4) ifTrue: [ self cerrarCausa ].
-		(op = 5) ifTrue: [ self listado ].
-	].
+                op := entrada asNumber asInteger.
 
-	consola mostrar: 'Sistema finalizado'.
-	consola cerrar.! !
+                (op = 1) ifTrue: [ self crearAbogado ].
+                (op = 2) ifTrue: [ self crearCausa ].
+                (op = 3) ifTrue: [ self crearFuero ].
+                (op = 4) ifTrue: [ self cerrarCausa ].
+                (op = 5) ifTrue: [ self listado ].
+
+            ]
+            ifFalse: [
+                consola mostrarError:
+                    'Opcion invalida. Ingrese un numero entre 0 y 5'.
+            ].
+    ].
+
+    consola mostrar: 'Sistema finalizado'.! !
 
 
 !EstudioJuridico methodsFor: 'as yet unclassified' stamp: 'SHOT 15/Oct/2026 11:30:14'!
